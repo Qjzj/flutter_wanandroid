@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_learn/pages/App.dart';
-import 'package:flutter_learn/pages/Login/Login.dart';
+import 'package:flutter_learn/routes/application.dart';
 import 'package:provide/provide.dart';
 import '../../Provider/user_provider.dart';
 
@@ -10,14 +9,12 @@ class Launch extends StatefulWidget {
 }
 
 class _LaunchState extends State<Launch> {
-
   bool isLogin;
 
   @override
   void initState() {
     super.initState();
     jumpPage();
-    
   }
 
   @override
@@ -28,30 +25,20 @@ class _LaunchState extends State<Launch> {
       width: width,
       height: height,
       child: Image.network(
-          'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1575719989600&di=a87a86b1475c92c9692cacdaa3b55644&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201601%2F30%2F20160130164713_K8sZm.png',
-          fit: BoxFit.fill,
-        ),
+        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1575719989600&di=a87a86b1475c92c9692cacdaa3b55644&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201601%2F30%2F20160130164713_K8sZm.png',
+        fit: BoxFit.fill,
+      ),
     );
   }
 
   jumpPage() {
-
     Future.delayed(Duration(seconds: 5)).then((value) {
       isLogin = Provide.value<UserProvider>(context).isLogin;
-      if(isLogin) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return App();
-      }));
-    }else {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-        return Login();
-      }));
-    } 
-  });
-    
-
-    
-    
-   
+      if (isLogin) {
+        Application.router.navigateTo(context, '/');
+      } else {
+        Application.router.navigateTo(context, '/login');
+      }
+    });
   }
 }

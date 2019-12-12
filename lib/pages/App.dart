@@ -3,6 +3,7 @@ import 'package:flutter_learn/pages/Home/Home.dart';
 import 'package:flutter_learn/pages/KnowledgeSystem/knowledge_system.dart';
 import 'package:flutter_learn/pages/Navigation/navigation.dart';
 import 'package:flutter_learn/pages/Project/project.dart';
+import './Drawer/qj_drawer.dart';
 
 
 class App extends StatefulWidget {
@@ -62,86 +63,7 @@ class _AppState extends State<App> with AutomaticKeepAliveClientMixin {
           ProjectPage()
         ],
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              padding: EdgeInsets.zero,
-              decoration: BoxDecoration(
-                color: Colors.red,
-                image: DecorationImage(
-                  fit: BoxFit.fill,
-                  // image: NetworkImage('https://goss.veer.com/creative/vcg/veer/800water/veer-312853531.jpg')
-                  image: NetworkImage('https://goss.veer.com/creative/vcg/veer/800water/veer-305311069.jpg')
-                ),
-              ),
-              child: Container(
-                padding: EdgeInsets.all(5.0),
-                color: Color.fromARGB(50, 0, 0, 0),
-                child:  Column(
-                  children: <Widget>[
-                    Container(
-                      height: 35,
-                      alignment: Alignment.centerRight,
-                      child: IconButton(
-                        icon: Icon(Icons.close, color: Colors.white,),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          ClipOval(
-                            child: Image.network(
-                              'https://dss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=1470810757,33514013&fm=58',
-                              width: 70,
-                              height: 70,
-                              fit: BoxFit.fitWidth,
-                            ),
-                          ),
-                          SizedBox(width: 10,),
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,//dss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=1470810757,33514013&fm=58,
-                              children: <Widget>[
-                                Text('花开不败', style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white
-                                )),
-                                SizedBox(height: 12,),
-                                Text(
-                                  '你若盛开,蝴蝶自来,你若精彩,天自安排',
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(color: Colors.white, fontSize: 15,),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: ListTile(
-                title: Text('Item1'),
-                trailing: Icon(Icons.arrow_forward_ios, color: Colors.black26, size: 16,),
-              ),
-            ),
-          ],
-        ),
-      ),
+      drawer: QJDrawer(),
       bottomNavigationBar: BottomNavigationBar(
         items: _getBottomNavigationItems(),
         type: BottomNavigationBarType.fixed,

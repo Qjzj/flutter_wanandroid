@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_learn/pages/App.dart';
+import 'package:flutter_learn/routes/application.dart';
 import 'package:provide/provide.dart';
 import '../../Provider/user_provider.dart';
 
@@ -19,9 +19,7 @@ class _LoginState extends State<Login> {
         child: Center(child: RaisedButton(
           onPressed: () {
             Provide.value<UserProvider>(context).setLoginState(true);
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-              return App();
-            }));
+            Application.router.navigateTo(context, '/');
           },
           child: Text('登录'),
         ),)

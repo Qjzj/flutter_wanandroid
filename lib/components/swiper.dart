@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_learn/pages/WebView/WebViewPage.dart';
+import 'package:flutter_learn/routes/application.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -21,9 +21,10 @@ class QCSwiper extends StatelessWidget {
           return Container(
             child: InkWell(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return WebViewPage(data[index]['title'], data[index]['url']);
-                }));
+                final String title = Application.chineseEncode(data[index]['title']);
+                final String link = Application.chineseEncode(data[index]['url']);
+                final String path = '/webview?title=$title&link=$link';
+                Application.router.navigateTo(context, path);
               },
               child: Stack(
                 children: <Widget>[

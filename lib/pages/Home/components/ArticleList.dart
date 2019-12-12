@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_learn/pages/WebView/WebViewPage.dart';
+import '../../../routes/application.dart';
 
 class ArticleList extends StatelessWidget {
   final List data;
@@ -29,9 +29,10 @@ class ArticleItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return WebViewPage(data['title'], data['link']);
-        }));
+        final String title = Application.chineseEncode(data['title']);
+        final String link = Application.chineseEncode(data['link']);
+        final String path = '/webview?title=$title&link=$link';
+        Application.router.navigateTo(context, path);
       },
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
