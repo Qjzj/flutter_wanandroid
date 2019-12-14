@@ -35,9 +35,9 @@ class _LaunchState extends State<Launch> {
     Future.delayed(Duration(seconds: 5)).then((value) {
       isLogin = Provide.value<UserProvider>(context).isLogin;
       if (isLogin) {
-        Application.router.navigateTo(context, '/');
+        Application.router.navigateTo(context, '/', replace: true);
       } else {
-        Application.router.navigateTo(context, '/login');
+        Application.router.navigateTo(context, '/login', replace: true);
       }
     });
   }

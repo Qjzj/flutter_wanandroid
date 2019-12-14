@@ -1,4 +1,6 @@
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_learn/routes/application.dart';
 
 class QJDrawer extends StatefulWidget {
   @override
@@ -16,7 +18,7 @@ class _QJDrawerState extends State<QJDrawer> {
           SizedBox(height: 10),
           ListItem('消息', icon: Icons.notifications),
           ListItem('收藏', icon: Icons.collections),
-          ListItem('设置', icon: Icons.settings),
+          ListItem('设置', icon: Icons.settings, tapItem: tapSetting,),
           ListItem(
             '分享',
             icon: Icons.share,
@@ -28,6 +30,11 @@ class _QJDrawerState extends State<QJDrawer> {
         ],
       ),
     );
+  }
+
+
+  tapSetting() {
+    Application.router.navigateTo(context, '/setting', transition: TransitionType.cupertino);
   }
 }
 
@@ -120,10 +127,10 @@ class ListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        Navigator.of(context).pop();
         if (tapItem != null) {
           tapItem();
         }
-        Navigator.of(context).pop();
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 5, vertical: 8),

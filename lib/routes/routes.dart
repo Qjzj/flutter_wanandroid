@@ -7,6 +7,7 @@ class Routes {
   static const rootPath = "/";
   static const loginPath = "/login";
   static const webviewPath = "/webview";
+  static const settingPath = '/setting';
 
   static void configureRoutes(Router router) {
     /// 404
@@ -17,5 +18,7 @@ class Routes {
     router.define(loginPath, handler: loginHandler);
     /// webview
     router.define(webviewPath, handler: webviewHandler);
+    /// 设置
+    router.define(settingPath, handler: settingHandler);
   }
 }

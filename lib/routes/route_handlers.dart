@@ -1,5 +1,6 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_learn/pages/Setting/setting.dart';
 import 'package:flutter_learn/pages/WebView/WebViewPage.dart';
 import 'package:flutter_learn/routes/application.dart';
 import '../pages/App.dart';
@@ -24,6 +25,10 @@ Handler webviewHandler = Handler(handlerFunc: (BuildContext context, Map<String,
   return WebViewPage(title, link);
 });
 
+/// 设置
+Handler settingHandler = Handler(handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  return Setting();
+});
 
 /// 404
 Handler notFindHandler = Handler(handlerFunc: (BuildContext context, Map<String, List<String>> params) {

@@ -42,14 +42,14 @@ class _AppState extends State<App> with AutomaticKeepAliveClientMixin {
             ),
           ),
           actions: <Widget>[
-            InkWell(
-              onTap: () {
-                print('wahhhhhhhh');
-              },
-              child: Icon(
+            IconButton(
+              icon: Icon(
                 Icons.search,
                 color: Colors.white,
               ),
+              onPressed: () {
+                print('搜索');
+              },
             ),
             SizedBox(width: 10.0,),
           ],
