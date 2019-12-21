@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_learn/routes/application.dart';
 import 'package:provide/provide.dart';
 import '../../Provider/user_provider.dart';
+import '../../api/loginApi.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -67,6 +69,8 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   String userName;
   String pwd;
+  bool _obscure = true;
+  bool _loading = false;
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -102,13 +106,20 @@ class _LoginFormState extends State<LoginForm> {
             ),
             TextFormField(
               decoration: InputDecoration(
-                hintText: '密码',
-                hintStyle: TextStyle(color: Colors.white60),
-                enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white)),
-                icon: Icon(Icons.lock, color: Colors.white),
-              ),
-              obscureText: true,
+                  hintText: '密码',
+                  hintStyle: TextStyle(color: Colors.white60),
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white)),
+                  icon: Icon(Icons.lock, color: Colors.white),
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.remove_red_eye),
+                    onPressed: () {
+                      setState(() {
+                        _obscure = !_obscure;
+                      });
+                    },
+                  )),
+              obscureText: _obscure,
               style: TextStyle(color: Colors.white),
               validator: (value) {
                 if (value.isEmpty) {
@@ -117,7 +128,7 @@ class _LoginFormState extends State<LoginForm> {
                 if (value.length < 6) {
                   return '密码最少6位,最多16位';
                 }
-                return '';
+                return null;
               },
               onSaved: (String text) {
                 setState(() {
@@ -132,15 +143,18 @@ class _LoginFormState extends State<LoginForm> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 RaisedButton(
-                  child: Text(
-                    '登录',
-                    style: TextStyle(color: Colors.white),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      _loading ? Container(margin: EdgeInsets.only(right: 10), child: Icon(Icons.graphic_eq), color: Colors.white,): Container(),
+                      Text(
+                        '登录',
+                        style: TextStyle(color: Colors.white),
+                      )
+                    ],
                   ),
                   color: Theme.of(context).primaryColor,
-                  onPressed: () {
-                    print('1111');
-                    print(_formKey.currentState.validate());
-                  },
+                  onPressed: _login,
                 ),
                 RaisedButton(
                   child: Text(
@@ -148,7 +162,7 @@ class _LoginFormState extends State<LoginForm> {
                     style: TextStyle(color: Colors.white),
                   ),
                   color: Colors.amber,
-                  onPressed: () {},
+                  onPressed: _register,
                 ),
               ],
             )
@@ -157,4 +171,33 @@ class _LoginFormState extends State<LoginForm> {
       ),
     );
   }
+
+  _login() {
+    FormState form = _formKey.currentState;
+    if (form.validate()) {
+      // 保存信息
+      form.save();
+      setState(() {
+        _loading = true;
+      });
+      login(userName, pwd).then((data) {
+        setState((){
+          _loading = false;
+        });
+        if(data['errorCode'] != 0) {
+          Toast
+        }
+        print(data);
+      }).catchError((err) {
+        setState((){
+          _loading = false;
+        });
+        print('请求出错$err');
+      })  ;
+    } else {
+      print('校验失败');
+    }
+  }
+
+  _register() {}
 }
