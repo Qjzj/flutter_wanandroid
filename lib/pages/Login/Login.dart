@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_learn/pages/App.dart';
 import 'package:flutter_learn/routes/application.dart';
 import 'package:provide/provide.dart';
 import '../../Provider/user_provider.dart';
@@ -112,7 +113,7 @@ class _LoginFormState extends State<LoginForm> {
                       borderSide: BorderSide(color: Colors.white)),
                   icon: Icon(Icons.lock, color: Colors.white),
                   suffixIcon: IconButton(
-                    icon: Icon(Icons.remove_red_eye),
+                    icon: Icon(Icons.remove_red_eye, color: Colors.white,),
                     onPressed: () {
                       setState(() {
                         _obscure = !_obscure;
@@ -146,7 +147,6 @@ class _LoginFormState extends State<LoginForm> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      _loading ? Container(margin: EdgeInsets.only(right: 10), child: Icon(Icons.graphic_eq), color: Colors.white,): Container(),
                       Text(
                         '登录',
                         style: TextStyle(color: Colors.white),
@@ -180,12 +180,16 @@ class _LoginFormState extends State<LoginForm> {
       setState(() {
         _loading = true;
       });
-      login(userName, pwd).then((data) {
+      if(userName == 'root' && pwd == '123456') {
+        Provide.value<UserProvider>(context).saveUser(userName, pwd);
+        Application.router.navigateTo(context, '/', replace: true);
+      }
+      /* login(userName, pwd).then((data) {
         setState((){
           _loading = false;
         });
         if(data['errorCode'] != 0) {
-          Toast
+          
         }
         print(data);
       }).catchError((err) {
@@ -193,7 +197,7 @@ class _LoginFormState extends State<LoginForm> {
           _loading = false;
         });
         print('请求出错$err');
-      })  ;
+      }); */
     } else {
       print('校验失败');
     }
